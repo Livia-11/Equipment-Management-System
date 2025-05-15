@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface ReturnRepository extends JpaRepository<Return, Long> {
     Optional<Return> findByRequestId(Long requestId);
-    List<Return> findByCondition(Return.Condition condition);
+    List<Return> findByReturnCondition(Return.Condition condition);
     List<Return> findByReturnDateBetween(LocalDateTime start, LocalDateTime end);
 } 

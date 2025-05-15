@@ -22,7 +22,7 @@ public class ReturnDTO {
     private String userName;
     private LocalDateTime returnDate;
     @NotNull(message = "Condition is required")
-    private Return.Condition condition;
+    private Return.Condition returnCondition;
     @Size(max = 200, message = "Notes cannot exceed 200 characters")
     private String notes;
 
@@ -32,9 +32,9 @@ public class ReturnDTO {
         this.equipmentId = returnEntity.getRequest().getEquipment().getId();
         this.equipmentName = returnEntity.getRequest().getEquipment().getName();
         this.userId = returnEntity.getRequest().getUser().getId();
-        this.userName = returnEntity.getRequest().getUser().getName();
+        this.userName = returnEntity.getRequest().getUser().getFullName();
         this.returnDate = returnEntity.getReturnDate();
-        this.condition = returnEntity.getCondition();
+        this.returnCondition = returnEntity.getReturnCondition();
         this.notes = returnEntity.getNotes();
     }
 } 

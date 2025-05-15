@@ -38,7 +38,7 @@ public class RequestDTO {
     public RequestDTO(Request request) {
         this.id = request.getId();
         this.userId = request.getUser().getId();
-        this.userName = request.getUser().getName();
+        this.userName = request.getUser().getFullName();
         this.equipmentId = request.getEquipment().getId();
         this.equipmentName = request.getEquipment().getName();
         this.purpose = request.getPurpose();

@@ -1,13 +1,12 @@
- package com.institution.KireziEquipmentManagementSystem.service;
+package com.institution.KireziEquipmentManagementSystem.service;
 
 import com.institution.KireziEquipmentManagementSystem.dto.UserDTO;
-import com.institution.KireziEquipmentManagementSystem.model.User;
 import java.util.List;
 
 public interface UserService {
-    UserDTO register(UserDTO userDTO, String password);
-    UserDTO getById(Long id);
-    UserDTO getByEmail(String email);
-    List<UserDTO> getAll();
+    UserDTO create(UserDTO userDTO);
+    UserDTO update(Long id, UserDTO userDTO);
     void delete(Long id);
+    UserDTO getById(Long id);
+    List<UserDTO> getAll();
 }

@@ -26,9 +26,10 @@ public class Return {
     @Column(nullable = false)
     private LocalDateTime returnDate;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Condition condition;
+    @Column(name = "return_condition", nullable = false)
+    private Condition returnCondition;
 
     private String notes;
 

@@ -24,7 +24,7 @@ public class AllocationLogDTO {
         this.equipmentId = log.getEquipment().getId();
         this.equipmentName = log.getEquipment().getName();
         this.userId = log.getUser().getId();
-        this.userName = log.getUser().getName();
+        this.userName = log.getUser().getFullName();
         this.allocatedAt = log.getAllocatedAt();
         this.action = log.getAction();
     }

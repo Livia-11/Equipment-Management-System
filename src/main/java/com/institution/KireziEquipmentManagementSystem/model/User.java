@@ -22,9 +22,14 @@ public class User {
     private Long id;
 
     @NotBlank
+    @Size(max = 50)
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @NotBlank
     @Size(max = 100)
     @Column(nullable = false)
-    private String name;
+    private String fullName;
 
     @NotBlank
     @Email

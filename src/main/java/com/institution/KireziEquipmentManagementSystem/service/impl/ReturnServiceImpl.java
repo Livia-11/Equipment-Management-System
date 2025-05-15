@@ -35,7 +35,7 @@ public class ReturnServiceImpl implements ReturnService {
         }
         Return ret = new Return();
         ret.setRequest(request);
-        ret.setCondition(dto.getCondition());
+        ret.setReturnCondition(dto.getReturnCondition());
         ret.setNotes(dto.getNotes());
         Return saved = returnRepository.save(ret);
         // Update equipment quantity and status
@@ -59,6 +59,6 @@ public class ReturnServiceImpl implements ReturnService {
 
     @Override
     public List<ReturnDTO> getByCondition(Return.Condition condition) {
-        return returnRepository.findByCondition(condition).stream().map(ReturnDTO::new).collect(Collectors.toList());
+        return returnRepository.findByReturnCondition(condition).stream().map(ReturnDTO::new).collect(Collectors.toList());
     }
 } 

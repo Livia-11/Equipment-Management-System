@@ -3,6 +3,7 @@ package com.institution.KireziEquipmentManagementSystem.controller;
 import com.institution.KireziEquipmentManagementSystem.dto.EquipmentDTO;
 import com.institution.KireziEquipmentManagementSystem.model.Equipment;
 import com.institution.KireziEquipmentManagementSystem.service.EquipmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,36 +19,71 @@ public class EquipmentController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EquipmentDTO> createEquipment(@RequestBody EquipmentDTO equipmentDTO) {
-        return ResponseEntity.ok(equipmentService.create(equipmentDTO));
+    public ResponseEntity<?> createEquipment(@RequestBody @Valid EquipmentDTO equipmentDTO) {
+        try {
+            return ResponseEntity.ok(equipmentService.create(equipmentDTO));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while creating equipment");
+        }
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<EquipmentDTO> updateEquipment(@PathVariable Long id, @RequestBody EquipmentDTO equipmentDTO) {
-        return ResponseEntity.ok(equipmentService.update(id, equipmentDTO));
+    public ResponseEntity<?> updateEquipment(@PathVariable Long id, @RequestBody @Valid EquipmentDTO equipmentDTO) {
+        try {
+            return ResponseEntity.ok(equipmentService.update(id, equipmentDTO));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while updating equipment");
+        }
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteEquipment(@PathVariable Long id) {
-        equipmentService.delete(id);
-        return ResponseEntity.ok().build();
+        try {
+            equipmentService.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while deleting equipment");
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EquipmentDTO> getEquipmentById(@PathVariable Long id) {
-        return ResponseEntity.ok(equipmentService.getById(id));
+    public ResponseEntity<?> getEquipmentById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(equipmentService.getById(id));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while retrieving equipment");
+        }
     }
 
     @GetMapping
-    public ResponseEntity<List<EquipmentDTO>> getAllEquipment() {
-        return ResponseEntity.ok(equipmentService.getAll());
+    public ResponseEntity<?> getAllEquipment() {
+        try {
+            return ResponseEntity.ok(equipmentService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while retrieving equipment list");
+        }
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<EquipmentDTO>> searchEquipment(@RequestParam String name) {
-        return ResponseEntity.ok(equipmentService.searchByName(name));
+    public ResponseEntity<?> searchEquipment(@RequestParam String name) {
+        try {
+            if (name == null || name.trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Search name cannot be empty");
+            }
+            return ResponseEntity.ok(equipmentService.searchByName(name));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while searching equipment");
+        }
     }
 
     @GetMapping("/filter/status")
